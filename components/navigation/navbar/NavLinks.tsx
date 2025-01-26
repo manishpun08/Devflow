@@ -1,4 +1,5 @@
 "use client";
+
 import { SheetClose } from "@/components/ui/sheet";
 import { sidebarLinks } from "@/constants";
 import { cn } from "@/lib/utils";
@@ -10,6 +11,7 @@ import React from "react";
 const NavLinks = ({ isMobileNav = false }: { isMobileNav?: boolean }) => {
   const pathname = usePathname();
   const userId = 1;
+
   return (
     <>
       {sidebarLinks.map((item) => {
@@ -22,7 +24,7 @@ const NavLinks = ({ isMobileNav = false }: { isMobileNav?: boolean }) => {
           else return null;
         }
 
-        const linkComponents = (
+        const LinkComponent = (
           <Link
             href={item.route}
             key={item.label}
@@ -43,19 +45,20 @@ const NavLinks = ({ isMobileNav = false }: { isMobileNav?: boolean }) => {
             <p
               className={cn(
                 isActive ? "base-bold" : "base-medium",
-                !isMobileNav && "max-lg-hidden"
+                !isMobileNav && "max-lg:hidden"
               )}
             >
               {item.label}
             </p>
           </Link>
         );
+
         return isMobileNav ? (
           <SheetClose asChild key={item.route}>
-            {linkComponents}
+            {LinkComponent}
           </SheetClose>
         ) : (
-          <div key={item.route}>{linkComponents}</div>
+          <React.Fragment key={item.route}>{LinkComponent}</React.Fragment>
         );
       })}
     </>
